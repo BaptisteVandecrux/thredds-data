@@ -47,7 +47,7 @@ def main(time_resolution="day", data_type="sites", file_format="csv"):
             file_path_csv = os.path.join(save_dir_csv, f"{id_value}_{time_resolution}.csv")
             download_file(file_url_csv, file_path_csv)
 
-        if data_type == "sites" and file_format in ["nc", "both"]:
+        if data_type == "sites" and file_format in ["nc","netcdf", "both"]:
             file_url_nc = f"{base_url_nc}{time_resolution}/{id_value}_{time_resolution}.nc"
             file_path_nc = os.path.join(save_dir_nc, f"{id_value}_{time_resolution}.nc")
             download_file(file_url_nc, file_path_nc)
