@@ -33,8 +33,14 @@ def main(time_resolution="day", data_type="sites", file_format="csv"):
         print("Invalid data type. Choose 'sites' or 'stations'.")
         return
 
+    readme_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_data_readme.pdf"
+    readme_path = "metadata/AWS_data_readme.pdf"
+    variables_path = "metadata/AWS_variables.csv"
+    variables_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_variables.csv"
     # Download metadata file
     download_file(metadata_url, metadata_path)
+    download_file(readme_url, variables_path)
+    download_file(variables_url, readme_path)
 
     # Read IDs from metadata
     df = pd.read_csv(metadata_path)
@@ -61,4 +67,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(time_resolution=args.time_resolution, data_type=args.data_type, file_format=args.file_format)
+    # for t in ["month", "day", "hour"]:
+    for t in ["hour"]:
+        main(time_resolution=t,
+             data_type="stations",
+             file_format="csv")
