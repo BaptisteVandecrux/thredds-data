@@ -15,17 +15,19 @@ def download_file(url, save_path):
         print(f"Failed to download: {url}")
 
 def main(time_resolution="day", data_type="sites", file_format="csv"):
+    metadata_sites_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_sites_metadata.csv"
+    metadata_sites_path = "metadata/AWS_sites_metadata.csv"
+    metadata_stations_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_stations_metadata.csv"
+    metadata_stations_path = "metadata/AWS_stations_metadata.csv"
     if data_type == "sites":
-        metadata_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_sites_metadata.csv"
-        metadata_path = "metadata/AWS_sites_metadata.csv"
+        metadata_path = metadata_sites_path
         base_url_csv = "https://thredds.geus.dk/thredds/fileServer/aws/l3sites/csv/"
         base_url_nc = "https://thredds.geus.dk/thredds/fileServer/aws/l3sites/netcdf/"
         save_dir_csv = f"level_3_sites/csv/{time_resolution}/"
         save_dir_nc = f"level_3_sites/netcdf/{time_resolution}/"
         id_column = "site_id"
     elif data_type == "stations":
-        metadata_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_stations_metadata.csv"
-        metadata_path = "metadata/AWS_stations_metadata.csv"
+        metadata_path = metadata_stations_path
         base_url_csv = "https://thredds.geus.dk/thredds/fileServer/aws/l2stations/csv/"
         save_dir_csv = f"level_2_stations/csv/{time_resolution}/"
         id_column = "station_id"
@@ -37,8 +39,10 @@ def main(time_resolution="day", data_type="sites", file_format="csv"):
     readme_path = "metadata/AWS_data_readme.pdf"
     variables_path = "metadata/AWS_variables.csv"
     variables_url = "https://thredds.geus.dk/thredds/fileServer/aws/metadata/AWS_variables.csv"
+
     # Download metadata file
-    download_file(metadata_url, metadata_path)
+    download_file(metadata_sites_url, metadata_sites_path)
+    download_file(metadata_stations_url, metadata_stations_path)
     download_file(readme_url, variables_path)
     download_file(variables_url, readme_path)
 
@@ -67,8 +71,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # for t in ["month", "day", "hour"]:
-    for t in ["hour"]:
+    # for t in ["hour"]:
+    for t in [  "month","day","hour"]:
         main(time_resolution=t,
-             data_type="stations",
+             data_type="sites",
              file_format="csv")
